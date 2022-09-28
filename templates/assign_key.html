@@ -1,0 +1,145 @@
+{% extends 'base/base.html' %}
+{% block title %} Add Person {% endblock title %}
+{% block main_content %}
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" style="margin-top:-50px">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Careers - Apply-->
+            <div class="card">
+                <!--begin::Body-->
+                <div class="card-body p-lg-17">
+
+                    <!--begin::Layout-->
+                    <div class="d-flex flex-column flex-lg-row mb-17">
+                        <!--begin::Content-->
+                        <div class="flex-lg-row-fluid me-0 me-lg-20">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <!--begin::Form-->
+                            <form class="form mb-15" method="post" id="kt_careers_form">
+                                {% csrf_token %}
+                                <!--begin::Input group-->
+                                <div class="row mb-5">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Select Key</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                   title="To search, Enter key ID from QR Code"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select name="key" data-control="select2" data-placeholder="Select a key..."
+                                                    class="form-select form-select-solid" required>
+                                                {% for key in keys %}
+                                                    <option value="{{ key.key_qr }}">{{ key.key_title }}
+                                                        => {{ key.key_qr }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                    <!--end::Col-->
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <div class="row">
+                                            <div class="col-lg-9">
+                                                <!--begin::Input group-->
+                                                <div class="d-flex flex-column mb-5 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                        <span class="required">Select Person</span>
+                                                        <i class="fas fa-exclamation-circle ms-2 fs-7"
+                                                           data-bs-toggle="tooltip"
+                                                           title="To search, Enter person name or ID from QR Code"></i>
+                                                    </label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Select-->
+                                                    <select name="person" data-control="select2"
+                                                            data-placeholder="Select a person..."
+                                                            class="form-select form-select-solid" required>
+                                                        {% for person in persons %}
+                                                            <option value="{{ person.person_qr }}">{{ person.full_name }}
+                                                                => {{ person.person_qr }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <!--end::Select-->
+                                                </div>
+                                                <!--end::Input group-->
+                                            </div>
+                                            <div class="col-lg-3 mt-9">
+                                                <a class="btn btn-sm btn-light-success" href="{% url 'add_new_person' %}"><i
+                                                        class="fa fa-user-plus"></i> Add New</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--end::Col-->
+
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Submit-->
+                                <button type="submit" class="btn btn-primary" id="kt_careers_submit_button">
+                                    <!--begin::Indicator-->
+                                    <span class="indicator-label">Assign Key</span>
+                                    <span class="indicator-progress">Please wait...
+														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <!--end::Indicator-->
+                                </button>
+                                <!--end::Submit-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Content-->
+                        {% if person %}
+                            <!--begin::Sidebar-->
+                            <div class="flex-lg-row-auto w-100 w-lg-275px w-xxl-350px">
+                                <!--begin::Careers about-->
+                                <div class="card bg-light">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <!--begin::Top-->
+                                        <div class="mb-7">
+                                            <!--begin::Title-->
+                                            <h2 class="fs-1 text-gray-800 w-bolder mb-6">Person's QR Code</h2>
+                                            <!--end::Title-->
+                                            <img src="{{ person.qr_image.url }}" class="img-thumbnail">
+                                        </div>
+                                        <!--end::Top-->
+                                        <!--begin::Item-->
+                                        <div class="mb-8 text-center justify-content-center">
+                                            <a href="{{ person.qr_image.url }}" download class="btn btn-sm btn-primary">Download</a>
+
+                                        </div>
+                                        <!--end::Item-->
+
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Careers about-->
+                            </div>
+                            <!--end::Sidebar-->
+                        {% endif %}
+                    </div>
+                    <!--end::Layout-->
+
+
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Careers - Apply-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+
+{% endblock main_content %}

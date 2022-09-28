@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% block title %} Return Key {% endblock title %}
+{% block main_content %}
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post" style="margin-top:-50px">
+        <!--begin::Container-->
+        <div id="kt_content_container" class="container-xxl">
+            <!--begin::Careers - Apply-->
+            <div class="card">
+                <!--begin::Body-->
+                <div class="card-body p-lg-17">
+
+                    <!--begin::Layout-->
+                    <div class="d-flex flex-column flex-lg-row mb-17">
+                        <!--begin::Content-->
+                        <div class="flex-lg-row-fluid me-0 me-lg-20">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-success">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <!--begin::Form-->
+                            <form class="form mb-15" method="post" id="kt_careers_form">
+                                {% csrf_token %}
+                                <!--begin::Input group-->
+                                <div class="row mb-5">
+                                    <!--begin::Col-->
+                                    <div class="col-md-6 fv-row">
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-5 fv-row">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-5 fw-bold mb-2">
+                                                <span class="required">Select Key</span>
+                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                                                   title="To search, Enter key ID from QR Code"></i>
+                                            </label>
+                                            <!--end::Label-->
+                                            <!--begin::Select-->
+                                            <select name="key" data-control="select2" data-placeholder="Select a key..."
+                                                    class="form-select form-select-solid" required>
+                                                {% for key in keys %}
+                                                    <option value="{{ key.key_qr }}">{{ key.key_title }}
+                                                        => {{ key.key_qr }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <!--end::Select-->
+                                        </div>
+                                        <!--end::Input group-->
+                                    </div>
+                                    <!--end::Col-->
+
+                                </div>
+                                <!--end::Input group-->
+
+                                <!--begin::Submit-->
+                                <button type="submit" class="btn btn-primary" id="kt_careers_submit_button">
+                                    <!--begin::Indicator-->
+                                    <span class="indicator-label">Return Key</span>
+                                    <span class="indicator-progress">Please wait...
+														<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <!--end::Indicator-->
+                                </button>
+                                <!--end::Submit-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Content-->
+                    </div>
+                    <!--end::Layout-->
+
+
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Careers - Apply-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Post-->
+
+{% endblock main_content %}
